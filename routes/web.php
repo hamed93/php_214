@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\PanelController;
+
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +17,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//
+Route::get('/admin/panel','Admin/PanelController@index');
+//Route::resourse('')
+
