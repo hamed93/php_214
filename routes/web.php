@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\PanelController;
+
 
 
 
@@ -16,8 +16,3 @@ use App\Http\Controllers\Admin\PanelController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-//
-Route::get('/admin/panel','Admin/PanelController@index');
-//Route::resourse('')
-
