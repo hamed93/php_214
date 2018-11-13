@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $tests="hamedjhsskd";
+    return view('welcome',compact('tests'));
 });
