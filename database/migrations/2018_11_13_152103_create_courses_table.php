@@ -19,9 +19,9 @@ class CreateCoursesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('type', 10);
             $table->string('title');
+            $table->text('body');
             $table->string('slug');
             $table->text('description');
-            $table->text('body');
             $table->string('price',50);
             $table->text('images');
             $table->string('tags');

@@ -4,8 +4,11 @@
         
    <div class="page-header head-section"> 
         <h2>دوره ها </h2>
+        <div class="btn-group">
+          <a href="{{ route('courses.create') }}" class="btn btn-sm btn-primary">ایجاد دوره جدید</a>
+          <a href="{{ route('episodes.index') }}" class="btn btn-sm btn-danger">بخش ویدیوها</a>
+      </div>
         
-        <a href="{{route('courses.create')}}" class="btn btn-sm btn-primary">ایجاد دوره جدید</a>
    </div>
         <div class="table-responsive" >
 

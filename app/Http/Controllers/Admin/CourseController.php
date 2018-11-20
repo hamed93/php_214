@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseRequest;
 use Illuminate\Foundation\Auth\User;
 use Auth;
+use App\Http\Requests\EpisodeRequest;
+
+
 
 
 
@@ -81,7 +84,24 @@ class CourseController extends AdminController
      */
     public function update(Request $request, Course $course)
     {
-        //
+       
+       
+        $file=$request->file('images');
+        $inputs=$request->all();
+        if($file){
+            $inputs=$this->uploadImages($request->file('images'));
+        }
+         else{
+             $inputs['images']=$article->images;
+             
+         }
+         $inputs['images']['thumb']=$inputs['imagesThumb'];
+          unset($inputs['imagesThumb']);
+
+          $article->update($inputs);
+         
+         
+         return redirect(route('courses.index'));
     }
 
     /**

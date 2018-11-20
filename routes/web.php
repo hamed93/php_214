@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 
 
 
+
 Route::namespace('Admin')->prefix('admin')->group(function(){
 
     $this->get('/panel','PanelController@index');
@@ -15,7 +16,9 @@ Route::namespace('Admin')->prefix('admin')->group(function(){
     
     $this->resources(['articles' => 'ArticleController']);
     $this->resources(['courses' => 'CourseController']);
+    $this->resource('episodes' , 'EpisodeController');
 });
+
 
 
 
