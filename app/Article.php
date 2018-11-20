@@ -7,6 +7,11 @@ use Cviebrock\EloquentSluggable\Sluggable;
 class Article extends Model
 {
     use Sluggable;
+    
+    protected $guarded=[];
+    protected $casts=[
+        'images'=>'array'
+    ];
 
     /**
      * Return the sluggable configuration array for this model.

@@ -18,7 +18,9 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array
      */
-    protected $except = [
-        //
+    
+     protected $except = [
+       //prtotect to not error csrf-ftoken for ckeditor
+        '/admin/panel/upload-image'
     ];
 }

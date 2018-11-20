@@ -1,5 +1,14 @@
 @extends('Admin.master')
+@section('scripts')
+ <script src ="/ckeditor/ckeditor.js"></script>
+ <script>
+            CKEDITOR.replace('body',{
+                filebrowserUploadUrl:'/admin/panel/upload-image',
+                filebrowserImageUploadUrl:'/admin/panel/upload-image'
 
+            });
+             </script>   
+@endsection
 
 @section('content')
     <div  class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -8,7 +17,7 @@
         </div>
         <form class="form-horizontal" action="{{ route('articles.store') }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
-            
+            @include('Admin.section.errors')
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="title" class="control-label">عنوان مقاله</label>
