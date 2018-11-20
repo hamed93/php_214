@@ -3,9 +3,9 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         
    <div class="page-header head-section"> 
-        <h2>مقالات </h2>
+        <h2>دوره ها </h2>
         
-        <a href="{{route('articles.create')}}" class="btn btn-sm btn-primary"> ارسال مقاله </a>
+        <a href="{{route('courses.create')}}" class="btn btn-sm btn-primary">ایجاد دوره جدید</a>
    </div>
         <div class="table-responsive" >
 
@@ -17,23 +17,31 @@
                 <th>عنوان مقاله</th>
                 <th>تعداد نظرات مقاله</th>
                 <th>مقدار بازدید</th>
+                <th>تعداد شرکت کننده ها</th>
+                <th>وضعیت دوره</th>
                 <th>تنظیمات</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($articles as $article)
+              @foreach($courses as $course)
               <tr>
-                <td><a href="{{$article->path()}}">{{$article->title}} </a></td>
-                <td> {{$article->commentCount}} </td>
-                <td> {{$article->viewCount}}  </td>
-                <td>1</td>
+                <td><a href="{{$course->path()}}">{{$course->title}} </a></td>
+                <td> {{$course->commentCount}} </td>
+                <td> {{$course->viewCount}}  </td>
                 <td>
+                  @if($course->type=='free')
+                رایگان
+               @elseif($course->type=='vip')
+ویژه
+                @else
+                نقدی
+                @endif
 
-                <form action="{{route ('articles.destroy',['id'=>$article->id] )}}" method="post">
+                <form action="{{route ('courses.destroy',['id'=>$course->id] )}}" method="post">
                 {{method_field('delete')}}
                 {{csrf_field()}}
                 <div class="btn-group btn-group-xs">
-                  <a href="{{ route('articles.edit' , ['id' => $article->id]) }}"  class="btn btn-primary">ویرایش</a>
+                  <a href="{{ route('courses.edit' , ['id' => $course->id]) }}"  class="btn btn-primary">ویرایش</a>
                   <button type="submit" class="btn btn-danger">حذف</button>
                   </div>
                 </form>
@@ -45,7 +53,7 @@
           </table>
         </div>
         <div style="text-align:center ">
-          {!!$articles->render()!!}
-        </div> 
+          {!!$courses->render()!!}
+        </div>
       </div>
 @endsection
