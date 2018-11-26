@@ -5,9 +5,16 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
+use App\Permission;
+use App\Role;
 class PanelController extends Controller
 {
     public function index(){
+      
+        //  auth()->loginUsingId(1);
+        //dd(auth()->user()->hasRole('manager'));
+      //  return Role::whereName('manager')->first()->permissions()->sync([1,2];
+        
         return view ('admin.panel');
     }
     

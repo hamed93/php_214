@@ -11,16 +11,7 @@
             <a class="navbar-brand" href="#">وب سایت آموزشی لاراول</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
-            {{-- {{-- <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-              <li><a href="#">Settings</a></li>
-              <li><a href="#">Profile</a></li>
-              {{-- <li><a href="#">Help</a></li> --}}
-            {{-- </ul> --}}
-            {{-- <form class="navbar-form navbar-right">
-              <input type="text" class="form-control" placeholder="Search..."> 
-                </form>
-                --}}
+           
             <div class="navbar-left">
           <a href="/logout" class="btn btn-sm btn-warning" style="margin : 15px" >خروج از پنل کاربری</a>
           
@@ -39,14 +30,16 @@
               <li><a href="/admin/courses">دوره ها</a></li>
             </ul>
             <ul class="nav nav-sidebar">
-              <li><a href="">کاربران<span class="badge" >0 </span></a></li>
+              <li><a href="/admin/users">کاربران<span class="badge" >0 </span></a></li>
               <li><a href="">پرداختی های موفق</a></li>
               <li><a href="">پرداختی های نا موفق</a></li>
               
             </ul>
             <ul class="nav nav-sidebar">
+              
+              @can('show-comment');
               <li><a href="">همه نظرات<span class="badge" >0 </span></a></li>
               <li><a href="">نظرات تایید شده <span class="badge" >0 </span></a></li>
-              {{-- <li><a href="">Another nav item</a></li> --}}
+              @endcan
             </ul>
           </div>
