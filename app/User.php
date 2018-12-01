@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,HasRole;
 
     /**
      * The attributes that are mass assignable.
@@ -46,6 +46,8 @@ if(is_string($role)){
 }
 return !! $role->intersect($this->role)->count();
 }
-
+     public function isAdmin(){
+        return $this->level=='admin' ? true : false;
+     }
 
 }

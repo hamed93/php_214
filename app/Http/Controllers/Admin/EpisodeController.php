@@ -39,7 +39,7 @@ class EpisodeController extends AdminController
      */
     public function store(EpisodeRequest $request)
     {
-        auth()->loginUsingId(1);
+    
         $episode=Episode::create($request->all());
         $this->setCourseTime($episode);
         return redirect(route('episodes.index'));
