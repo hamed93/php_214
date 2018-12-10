@@ -8,8 +8,8 @@ use App\User;
 
 Route::get('/',function(){
 //event (new \App\Events\UserActivation(\App\User::find(3)));
-dd(auth()->user());
-//return 'done';
+
+return 'done';
 });
 Route::get('user/active/email/{token}','UserController@activation')->name('activation.account');
 
