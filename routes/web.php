@@ -8,14 +8,14 @@ use App\User;
 
 Route::get('/',function(){
 //event (new \App\Events\UserActivation(\App\User::find(3)));
-return 'done';
+dd(auth()->user());
+//return 'done';
 });
 Route::get('user/active/email/{token}','UserController@activation')->name('activation.account');
 
 
 
-
-Route::group(['namespace'=>'Admin','middleware'=>['auth:web','checkAdmin'],'prefix'=>'admin'],function(){
+Route::group(['namespace'=>'Admin','prefix'=>'admin'],function(){
 
     $this->get('/panel','PanelController@index');
     

@@ -31,23 +31,31 @@ class AuthServiceProvider extends ServiceProvider
         // });
         
         
-        foreach($this->getPermissions() as $permission){
+        // foreach($this->getPermissions() as $permission){
 
-            Gate::define($permission->name ,function($user) use ($permission){
+        //     Gate::define($permission->name ,function($user) use ($permission){
                 
-                return $user->hasRole($permission->roles);
-            });
+        //         return $user->hasRole($permission->roles);
+        //     });
 
-        }
+      //  }
         
     
     }
-    public function getPermissions(){
+    // public function getPermissions(){
            
     
-        return Permission::with('roles')->get();
+    //     return Permission::with('roles')->get();
 
-     }
+    //  }
+    protected function getPermissions()
+{
+    try {
+        return Permission::with('roles')->get();
+    } catch (\Exception $e) {
+        return [];
+    }
+}
 
 
 }

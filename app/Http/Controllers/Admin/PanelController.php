@@ -16,7 +16,7 @@ class PanelController extends Controller
         
          
         //dd(auth()->user()->hasRole('manager'));
-      //  return Role::whereName('manager')->first()->permissions()->sync([1,2];
+      // return Role::whereName('manager')->first()->permissions()->sync([1,2];
         
         return view ('admin.panel');
     }
