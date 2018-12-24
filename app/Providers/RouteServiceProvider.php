@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Course;
+use App\Article; 
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -23,7 +25,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Explicit Binding for ArticleController and CourceController with slug
+          Route::bind('articleSlug' , function ($value) {
+            return Article::whereSlug($value)->firstOrFail();
+         });
+ 
+         Route::bind('courseSlug' , function ($value) {
+             return Course::whereSlug($value)->firstOrFail();
+         });
 
         parent::boot();
     }

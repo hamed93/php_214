@@ -21,7 +21,7 @@ class Course extends Model
         ];
     }
     public function path(){
-        return "/course/$this->slug"; 
+        return "/courses/$this->slug"; 
     }
     public function setBodyAttribute($value)
     {
@@ -30,6 +30,10 @@ class Course extends Model
     }
     public function episodes(){
         return $this->hasMany(Episode::class);
+    }
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
 }

@@ -10,6 +10,15 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
+                        @if(count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
                         <div class="form-group row">
                             <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
@@ -50,9 +59,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="g-recaptcha" data-sitekey="6LfrfoAUAAAAAOeosb-NEZA148UKShQZEHUDDdBb"></div>
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
+                                <a href="{{ url('login/google')  }}" class="btn btn-danger">Login With Google</a>
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>

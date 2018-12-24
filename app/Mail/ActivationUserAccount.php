@@ -34,6 +34,8 @@ class ActivationUserAccount extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->subject('لینک فعالسازی')
+        //موضوعی که در ایمیل بخوایم نشون بدیم
             ->markdown('emails.active-user');
+            //esme view morde nazar dar markdown
     }
 }

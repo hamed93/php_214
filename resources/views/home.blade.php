@@ -1,23 +1,23 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/sweetalert.css">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+    <form action="/getDate" method="POST">
+      {{ csrf_field() }}
+      <textarea name="message" id="message" cols="30" rows="10"> </textarea>
+      <div class="g-recaptcha" data-sitekey="6LfrfoAUAAAAAOeosb-NEZA148UKShQZEHUDDdBb"></div>
+      <button type="submit">send</button>
+    </form>
+    <script src="/js/sweetalert.min.js"></script>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    <!-- Include this after the sweet alert js file -->
+    @include('sweet::alert')
 
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+</body>
+</html>

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Egulias\EmailValidator\Warning\Comment;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','active'
     ];
 
     /**
@@ -31,6 +32,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class);    
     }
+    public function activationCode(){
+        return $this->hasMany(ActivationCode::class);
+    }
     public function course()
     {
         return $this->hasMany(Course::class);    
@@ -38,6 +42,9 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+    public function comments(){
+        return $this->hasmany(Comment::class);
     }
 
 public function hasRole($role){
