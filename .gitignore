@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /storage/download
+public\upload\images\2018
 /vendor
 /.idea
 /.vscode
