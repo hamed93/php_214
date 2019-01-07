@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>وبسایت راکت</title>
+    
+    {{--<title>وبسایت راکت</title>--}}
 
     <!-- Bootstrap Core CSS -->
     <link href="/css/home.css" rel="stylesheet">
@@ -34,6 +32,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
+                @if(auth()->check())
+                <li>
+                    <a href="{{ route('user.panel') }}">پنل کاربری</a>
+                </li>
+                <li>
+                    <a href="/logout">خروج</a>
+                </li>
+            @else
                 <li>
                     <a href="#">دوره‌ها</a>
                 </li>
@@ -43,7 +49,7 @@
                 <li>
                     <a href="#">درباره‌ما</a>
                 </li>
-            </ul>
+            @endif
         </div>
         <!-- /.navbar-collapse -->
     </div>
@@ -78,6 +84,8 @@
 
 
 <script src="/js/app.js"></script>
+<script src="/js/sweetalert.min.js"></script>
+@include('sweet::alert')
 
 </body>
 

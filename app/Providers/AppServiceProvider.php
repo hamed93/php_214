@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client;
+use App\Comment;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,7 +31,21 @@ class AppServiceProvider extends ServiceProvider
                 'remoteip' => request()->ip()
             ]
         ]);
+       //sent number of approved comment for view admin.section.header
+       view()->composer('admin.section.header' , function($view) {
+        $commentUnsuccessfulCount = Comment::whereApproved(0)->count();
+        $commentSuccessCount = Comment::whereApproved(1)->count();
 
+        $paymentUnsuccessfulCount = Payment::wherePayment(0)->count();
+        $paymentSuccessCount = Payment::wherePayment(1)->count();
+        $view->with([
+            'commentUnsuccessfulCount' => $commentUnsuccessfulCount,
+            'commentSuccessfulCount' => $commentSuccessCount,
+            'paymentSuccessCount' => $paymentSuccessCount,
+            'paymentUnsuccessfulCount' => $paymentUnsuccessfulCount,
+            ]);
+    });
+//=====================================
         $response = json_decode($response->getBody());
         //  dd($response);
         return $response->success;

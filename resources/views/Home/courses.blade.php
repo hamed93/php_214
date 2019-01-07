@@ -8,11 +8,11 @@
         <!-- Blog Post -->
 
         <!-- Title -->
-        <h1>عنوان  دوره</h1>
+        <h1>{{ $course->title }}</h1>
 
         <!-- Author -->
         <p class="lead small">
-            توسط <a href="#">حسام موسوی</a>
+            توسط <a href="#">{{ $course->user->name }}</a>
         </p>
 
         <hr>
@@ -21,20 +21,34 @@
         <p><span class="glyphicon glyphicon-time"></span> ارسال شده در ۱۲ خرداد ۹۶</p>
 
         <hr>
-
+       <!-- for playing viedo with video js -->
+        <video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
+               poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+            <source src="{{ \App\Episode::find(1)->download() }}" type='video/mp4'>
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+        </video>
         <!-- Post Content -->
-        <p dir="rtl">دیمونس در واقع فرایند های پشت زمینه سیستم شما رو در بر می گیره. که معمولا یا در هنگام بوت شدن سیستم شروع به کار میکنه و یا بعد از اینکه به دسکتاپ وارد شدید.</p>
-
-        <p dir="rtl"><strong>Shell</strong></p>
-
-        <p dir="rtl">&nbsp;به احتمال زیاد چیزی به اسم خط فرمان لینوکس رو شنیده باشید. این قسمت رو شل یا پوسته میگن. در واقع جایی هستش که شما می تونید از طریق متن در یک محیط متنی با کامپیوتر ارتباط برقرار کنید. اینجا جاییه که باعث میشه مردم بیشترین ترس رو نسبت به لینوکس پیدا کنند. البته با حضور دسکتاپ های گرافیکی مدرن کمتر برای انجام کارهای روزمره به محیط کامند لاین احتیاج پیدا می کنیم.&nbsp;</p>
-
-        <p dir="rtl"><strong>Graphical Server</strong></p>
-
-        <p dir="rtl">&nbsp;در واقع این قسمت رو میشه یک زیر سیستم به حساب آورد که می تونه گرافیک رو روی صفحه نمایش، نشون بده. اغلب اوقات ما اون رو با اسم X-Server هم می بینیم.</p>
+       <div id="content">
+           {!! $course->body !!}
+       </div>
         <hr>
-        <div class="alert alert-danger" role="alert">برای مشاهده تمامی قسمت ها باید این دوره را خریداری کنید</div>
-        <div class="alert alert-danger" role="alert">برای مشاهده تمامی قسمت ها باید عضویت ویژه تهیه کنید</div>
+
+        @if(auth()->check())
+           @if($course->type == 'vip')
+                @if(! user()->isActive())
+                    <div class="alert alert-danger" role="alert">برای مشاهده تمامی قسمت ها باید عضویت ویژه تهیه کنید</div>
+                @endif
+           @elseif($course->type == 'cash')
+               @if(! user()->checkLearning($course))
+                    <div class="alert alert-danger" role="alert">برای مشاهده تمامی قسمت ها باید این دوره را خریداری کنید</div>
+                @endif
+           @endif
+        @else
+            <div class="alert alert-danger" role="alert">برای مشاهده این دوره نیاز است ابتدا وارد سایت شوید</div>
+        @endif
 
         <h3>قسمت های دوره</h3>
         <table class="table table-condensed table-bordered">
@@ -47,46 +61,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>قسمت اول</td>
-                    <td>۱۰:۲۰</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>قسمت اول</td>
-                    <td>۱۰:۲۰</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>قسمت اول</td>
-                    <td>۱۰:۲۰</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
-                    </td>
-                </tr><tr>
-                    <th scope="row">1</th>
-                    <td>قسمت اول</td>
-                    <td>۱۰:۲۰</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
-                    </td>
-                </tr><tr>
-                    <th scope="row">1</th>
-                    <td>قسمت اول</td>
-                    <td>۱۰:۲۰</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-
-
+                @foreach($course->episodes()->latest()->get() as $episode)
+                    <tr>
+                        <th>{{ $episode->number }}</th>
+                        <td>{{ $episode->title }}</td>
+                        <td>{{ $episode->time }}</td>
+                        <td>
+                            <a href="{{ $episode->download() }}"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody> </table>
         <!-- Blog Comments -->
 
@@ -94,13 +78,39 @@
     </div>
 
     <!-- Blog Sidebar Widgets Column -->
-    <div class="col-md-4">
-        <div class="well">
-            برای استفاده از این دوره نیاز است این دوره را با مبلغ ۱۰۰۰۰ تومان خریداری کنید
-            <a href="#">
-                <button class="btn btn-success">خرید دوره</button>
-            </a>
-        </div>
+
+        <div class="col-md-4">
+            {{--@if(! auth()->user()->checkLearning($course))--}}
+                 {{--<div class="well">--}}
+                    {{--برای استفاده از این دوره نیاز است این دوره را با مبلغ ۱۰۰۰۰ تومان خریداری کنید--}}
+                    {{--<form action="/course/payment" method="post">--}}
+                        {{--{{ csrf_field() }}--}}
+                        {{--<input type="hidden" name="course_id" value="{{ $course->id }}">--}}
+                        {{--<button type="submit" class="btn btn-success">خرید دوره</button>--}}
+                    {{--</form>--}}
+                {{--</div>--}}
+            {{--@endif--}}
+
+        @if(auth()->check())
+            @if($course->type == 'vip')
+                @if(! user()->isActive())
+                    <div class="well"><a href="{{ route('user.panel.vip') }}">برای مشاهده تمامی قسمت ها باید عضویت ویژه تهیه کنید</a></div>
+                @endif
+            @elseif($course->type == 'cash')
+                @if(! user()->checkLearning($course))
+                        <div class="well">
+                            برای استفاده از این دوره نیاز است این دوره را با مبلغ ۱۰۰۰۰ تومان خریداری کنید
+                            <form action="/course/payment" method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="course_id" value="{{ $course->id }}">
+                                <button type="submit" class="btn btn-success">خرید دوره</button>
+                            </form>
+                        </div>
+                @endif
+            @endif
+        @else
+            <div class="well">برای مشاهده این دوره نیاز است ابتدا وارد سایت شوید</div>
+        @endif
         <!-- Blog Search Well -->
         <div class="well">
             <h4>جستجو در سایت</h4>
@@ -122,4 +132,5 @@
         </div>
 
     </div>
+
 @endsection

@@ -1,4 +1,4 @@
-@extends('Admin.master')
+@extends('admin.master')
 @section('scripts')
  <script src ="/ckeditor/ckeditor.js"></script>
  <script>

@@ -17,6 +17,7 @@
         </div>
         <form class="form-horizontal" action="{{ route('courses.update' , ['id' => $course->id]) }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
+            {{ method_field('PATCH') }}
             @include('Admin.section.errors')
             <div class="form-group">
                 <div class="col-sm-12">

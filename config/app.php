@@ -224,6 +224,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite'=>Laravel\Socialite\Facades\Socialite::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+        'ComposerServiceProvider'=>Illuminate\Support\ServiceProvider::class,
 
 
     ],

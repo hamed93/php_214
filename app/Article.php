@@ -30,8 +30,8 @@ class Article extends Model
   public function path(){
     return "/articles/$this->slug"; 
 }
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
-    }
+public function comments()
+{
+    return $this->morphMany(Comment::class, 'commentable');
+}
 }

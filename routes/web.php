@@ -17,23 +17,50 @@ Route::get('/' , 'HomeController@index');
 Route::get('/articles/{articleSlug}' , 'ArticleController@single');
 Route::get('/courses/{courseSlug}' , 'CourseController@single');
 //---------------------
+
 Route::post('/comment' , 'HomeController@comment');
 Route::get('/user/active/email/{token}' , 'UserController@activation')->name('activation.account');
+//download route('routeName', array)
+Route::get('/download/{episode}','CourseController@download');
 
-Route::get('user/active/email/{token}','UserController@activation')->name('activation.account');
+//Route::get('user/active/email/{token}','UserController@activation')->name('activation.account');
 //login and regiester with goole
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
-Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');\
+//for payement zarinpall;
+Route::group(['middleware' => 'auth:web'] , function () {
+    $this->post('/course/payment' , 'CourseController@payment');
+    $this->get('/course/payment/checker' , 'CourseController@checker');
+
+    $this->group(['prefix' => '/user/panel'] , function(){
+        $this->get('/' , 'UserController@index')->name('user.panel');
+        $this->get('/history' , 'UserController@history')->name('user.panel.history');
+        $this->get('/vip' , 'UserController@vip')->name('user.panel.vip');
+  
+         $this->post('/payment' , 'UserController@vipPayment')->name('user.panel.vip.payment');
+         $this->get('/checker' , 'UserController@vipChecker')->name('user.panel.vip.checker');
+     });
+  });
 
 
+// namespace('Admin')->prefix('admin')
 Route::group(['namespace'=>'Admin','prefix'=>'admin'],function(){
 
     $this->get('/panel','PanelController@index');
-    
     $this->post('/panel/upload-image','PanelController@uploadImageSubject');
-    
     $this->resources(['articles' => 'ArticleController']);
     $this->resources(['courses' => 'CourseController']);
+    
+    //comment section
+    
+    $this->get('comments/unsuccessful' , 'CommentController@unsuccessful');
+    $this->resource('comments' , 'CommentController');
+    //payment section
+    
+    $this->get('payments/unsuccessful' , 'PaymentController@unsuccessful');
+    $this->resource('payments' , 'PaymentController');
+
+
     $this->resource('episodes' , 'EpisodeController');
     $this->resource('roles','RoleController');
     $this->resource('permissions','PermissionController');
@@ -42,9 +69,12 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'],function(){
         $this->get('/','UserController@index');
         $this->resource('level','LevelManageController',['parameters'=>['level'=>'user']]);
         $this->delete('{user}/destroy','UserController@destroy')->name('users.destroy');
-
     });
 });
+
+       
+
+
 
 Route::auth();
 Route::group(['namespace' => 'Auth'] , function (){
@@ -77,3 +107,4 @@ Route::post('/getDate',function(){
         return request('message');
     }
     });
+    Route::get('/home', 'HomeController@index')->name('home');

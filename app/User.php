@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Egulias\EmailValidator\Warning\Comment;
+use Illuminate\Support\Carbon;
+//use Faker\Provider\el_GR\Payment;
 
 class User extends Authenticatable
 {
@@ -17,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','active'
+        'name', 'email', 'password','active','viptime'
     ];
 
     /**
@@ -28,6 +30,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    //for findout user vip or not ?
+    public function isActive(){
+        return $this->viptime > Carbon::now() ? true : false ;
+
+    }
     public function article()
     {
         return $this->hasMany(Article::class);    
@@ -46,7 +53,15 @@ class User extends Authenticatable
     public function comments(){
         return $this->hasmany(Comment::class);
     }
-
+    public function payments(){
+        return $this->hasmany(Payment::class);
+    }
+    //user ghablan course ro kharide ya na?
+    public function checkLearning($course)
+    {
+        return !! Learning::where('user_id' , $this->id)->where('course_id' , $course->id)->first();
+        // !! yani age object bud true age nabud fasle return kon
+    }
 public function hasRole($role){
 if(is_string($role)){
     return $this->roles->contains('name',$role);

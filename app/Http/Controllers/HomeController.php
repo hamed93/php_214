@@ -49,7 +49,7 @@ class HomeController extends Controller
     public function comment()
     {
         $this->validate(request(),[
-            'comment' => 'required|min:5'
+            'comment' => 'required'
         ]);
 
        Comment::create(array_merge([

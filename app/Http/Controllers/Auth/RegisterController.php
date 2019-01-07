@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Auth\UserRegistered;
 use App\Events\UserActivation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 
 class RegisterController extends Controller
@@ -75,6 +76,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'viptime'=>Carbon::now(),
         ]);
        
        
