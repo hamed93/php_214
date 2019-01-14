@@ -38,5 +38,35 @@ class Course extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function categories(){
+        return $this->belongsToMany(Category::class);
+    }
+//search for Check box #endregion
+public function scopeFilter($query)
+{
+    $category = request('category');
+    if( isset($category) && trim($category) != '' && $category != 'all') {
+        $query->whereHas('categories' , function ($query) use ($category) {
+            $query->whereId($category);
+        });
+    }
+
+    $type = request('type');
+    if(isset($type) && trim($type) != '') {
+        if(in_array($type , ['vip' , 'cash' , 'free'])) {
+            $query->whereType($type);
+        }
+    }
+
+
+    if(request('order') == '1') {
+        $query->oldest();
+    } else {
+        $query->latest();
+    }
+
+    return $query;
+}
+
 
 }

@@ -16,7 +16,12 @@ use Illuminate\Support\Carbon;
 class CourseController extends Controller
 {
     protected $MerchantID = 'f83cc956-f59f-11e6-889a-005056a205be'; //Required
-
+    
+    public function index()
+    {
+        $courses = Course::filter()->paginate(2);
+        return view('Home.all-courses' , compact('courses') );
+    }
 
     public function single(Course $course)
     {

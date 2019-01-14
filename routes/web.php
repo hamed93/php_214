@@ -11,8 +11,9 @@ use Illuminate\Validation\Validator;
 
 //Route for main page
 Route::get('/' , 'HomeController@index');
+Route::get('/search' , 'HomeController@search');
 //Route::get('/articles' , 'ArticleController@index');
-//Route::get('/courses' , 'CourseController@index');
+Route::get('/courses' , 'CourseController@index');
 // Explicit Binding for ArticleController and CourceController
 Route::get('/articles/{articleSlug}' , 'ArticleController@single');
 Route::get('/courses/{courseSlug}' , 'CourseController@single');

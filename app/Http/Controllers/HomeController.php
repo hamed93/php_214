@@ -7,6 +7,8 @@ use App\Article;
 use App\Course;
 use App\Comment;
 use Illuminate\Support\Carbon;
+use App\Jobs\SendMail;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -25,10 +27,19 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+   public function search()
+   {
+   $keywords=request('search');
+    return $articles=Article::search($keywords)->latest()->get();
+   }
+     
+   
+   public function index()
     {
     
-
+       $job=new SendMail(User::find(14),'salammm');
+       dispatch($job);
+       return 'done';
         if(cache()->has('articles')) {
             $articles = cache('articles');
         } else {

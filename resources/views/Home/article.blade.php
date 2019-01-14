@@ -76,15 +76,16 @@
             <div class="well">
                 <h4>جستجو در سایت</h4>
                 <div class="input-group">
-                    <input type="text" class="form-control">
-                    <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
+                    <form action="/search" method="get">
+                        <input type="text" name="search" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
                         </button>
                         </span>
+                    </form>
                 </div>
-                <!-- /.input-group -->
-            </div>
+                </div>
 
             <!-- Side Widget Well -->
             <div class="well">
